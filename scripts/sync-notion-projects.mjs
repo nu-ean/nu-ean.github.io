@@ -146,10 +146,7 @@ async function getBlockChildren(blockId) {
 async function getDescription(pageId) {
   const blocks = await getBlockChildren(pageId);
 
-  return blocks
-    .map(blockToMarkdown)
-    .filter(Boolean)
-    .join("\n\n");
+  return blocks.map(blockToMarkdown).filter(Boolean).join("\n\n");
 }
 
 async function queryProjects() {
@@ -236,6 +233,7 @@ export function getProjectById(id: string): Project | undefined {
 }
 
 const pages = await queryProjects();
+
 const projects = await Promise.all(
   pages.map(async (page, index) => {
     const description = await getDescription(page.id);
