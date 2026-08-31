@@ -3,6 +3,8 @@ import path from "node:path";
 import process from "node:process";
 
 const NOTION_VERSION = "2022-06-28";
+const IMAGE_OUTPUT_DIR = "public/generated/project-images";
+const IMAGE_PUBLIC_PATH = "/generated/project-images";
 const token = process.env.NOTION_TOKEN;
 const databaseId = process.env.NOTION_DATABASE_ID;
 
@@ -83,11 +85,15 @@ function getCheckbox(properties, name) {
 function getFiles(properties, name) {
   return (properties[name]?.files ?? [])
     .map((file) => {
-      if (file.type === "external") return file.external?.url;
-      if (file.type === "file") return file.file?.url;
+      if (file.type === "external") {
+        return { name: file.name, url: file.external?.url };
+      }
+      if (file.type === "file") {
+        return { name: file.name, url: file.file?.url };
+      }
       return undefined;
     })
-    .filter(Boolean);
+    .filter((file) => file?.url);
 }
 
 function blockToMarkdown(block) {
@@ -184,10 +190,61 @@ async function queryProjects() {
   return results;
 }
 
-function toProject(page, index, description) {
+function extensionFromContentType(contentType) {
+  const type = contentType?.split(";")[0]?.trim().toLowerCase();
+
+  switch (type) {
+    case "image/jpeg":
+      return "jpg";
+    case "image/png":
+      return "png";
+    case "image/gif":
+      return "gif";
+    case "image/webp":
+      return "webp";
+    case "image/svg+xml":
+      return "svg";
+    default:
+      return undefined;
+  }
+}
+
+function extensionFromName(name) {
+  const ext = name?.split(".").pop()?.toLowerCase();
+  return ext && /^[a-z0-9]+$/.test(ext) ? ext : undefined;
+}
+
+async function downloadProjectImages(projectId, files) {
+  await mkdir(IMAGE_OUTPUT_DIR, { recursive: true });
+
+  const imagePaths = [];
+
+  for (const [index, file] of files.entries()) {
+    const response = await fetch(file.url);
+
+    if (!response.ok) {
+      throw new Error(
+        `Image download failed for ${projectId}: ${response.status} ${file.url}`,
+      );
+    }
+
+    const contentType = response.headers.get("content-type");
+    const ext =
+      extensionFromName(file.name) || extensionFromContentType(contentType) || "png";
+    const filename = `${projectId}-${index + 1}.${ext}`;
+    const outputPath = path.join(IMAGE_OUTPUT_DIR, filename);
+    const buffer = Buffer.from(await response.arrayBuffer());
+
+    await writeFile(outputPath, buffer);
+    imagePaths.push(`${IMAGE_PUBLIC_PATH}/${filename}`);
+  }
+
+  return imagePaths;
+}
+
+function toProject(page, index, description, images) {
   const properties = page.properties;
   const id = getRichText(properties, "Slug") || page.id;
-  const images = getFiles(properties, "Images");
 
   return {
     index,
@@ -236,8 +293,13 @@ const pages = await queryProjects();
 
 const projects = await Promise.all(
   pages.map(async (page, index) => {
+    const properties = page.properties;
+    const id = getRichText(properties, "Slug") || page.id;
+    const imageFiles = getFiles(properties, "Images");
     const description = await getDescription(page.id);
-    return pruneEmptyValues(toProject(page, index + 1, description));
+    const images = await downloadProjectImages(id, imageFiles);
+
+    return pruneEmptyValues(toProject(page, index + 1, description, images));
   }),
 );
 
