@@ -1,0 +1,45 @@
+:root {
+  --bg-color: #e5e5e5;
+  --text-color: #4d4d4d;
+  --line-color: #c6c6c6;
+  --title-bg-color: #f0f0f0;
+  --dialog-header-bg: #eeeeee;
+  --card-bg-color: #fff;
+  --card-border-color: #e5e5e5;
+  --input-bg-color: #ffffff91;
+  --button-bg-color: #0077ff;
+  --button-text-color: #eeefe8;
+  --button-hover-bg-color: #005fd4;
+  --toast-bg-color: #000000d9;
+  --toast-text-color: #fff;
+  --shadow-color: #00000033;
+  --text-highlight: #131313;
+  --text-opacity: #4d4d4da5;
+  --list-item-color: #00000086;
+  --code-bg-color: #ededeb;
+  --code-color: #eb5758;
+  --subtext-color: #777;
+}
+
+[data-theme="dark"] {
+  --bg-color: #3b3b3b;
+  --text-color: #c2c7c9;
+  --line-color: #686867;
+  --title-bg-color: #4f4f4f;
+  --dialog-header-bg: #3d3e3b;
+  --card-bg-color: #4e4e4e;
+  --card-border-color: #e5e5e5;
+  --input-bg-color: #ffffff14;
+  --button-bg-color: #0077ff;
+  --button-text-color: #eeefe8;
+  --button-hover-bg-color: #005fd4;
+  --toast-bg-color: #9f9f9f;
+  --toast-text-color: #000000d9;
+  --shadow-color: #00000033;
+  --text-highlight: #e7c45d;
+  --text-opacity: #f5efd7a5;
+  --list-item-color: #ffffff8a;
+  --code-bg-color: #e3e3e3b3;
+  --code-color: #10100f;
+  --subtext-color: #b3b3b3;
+}

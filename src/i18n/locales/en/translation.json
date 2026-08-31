@@ -1,0 +1,43 @@
+{
+  "title": {
+    "about": "About",
+    "sign-in": "Admin Sign In",
+    "change-theme": "Change Theme",
+    "change-language": "Change Language",
+    "view-projects": "View Projects",
+    "get-in-touch": "Get in Touch"
+  },
+  "message": {
+    "alert": {
+      "invalid-password": "The password does not match."
+    },
+    "success": {},
+    "warning": {},
+    "info": {
+      "link": "Go to link",
+      "copy": "Copy to clipboard",
+      "copied": "Copied!"
+    }
+  },
+  "element": {
+    "title": "Project Title",
+    "summary": "Project Summary",
+    "period": "Project Duration",
+    "tech-stacks": "Tech Stack",
+    "project-scale": "Project Scale",
+    "category": {
+      "WORK": "Work",
+      "PERSONAL": "Personal"
+    },
+    "project": "Project",
+    "description": "Description",
+    "images": "Images"
+  },
+  "button": {
+    "view-details": "view details",
+    "return-to-list": "Return to List",
+    "edit-project": "Edit Project",
+    "edit-images": "Edit Images",
+    "delete-project": "Delete Project"
+  }
+}

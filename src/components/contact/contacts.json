@@ -1,0 +1,20 @@
+[
+  {
+    "id": "github",
+    "name": "GitHub",
+    "value": "https://github.com/nu-ean",
+    "action": "link"
+  },
+  {
+    "id": "email",
+    "name": "Email",
+    "value": "naeun.dev [at] gmail.com",
+    "action": "copy"
+  },
+  {
+    "id": "linkedin",
+    "name": "LinkedIn",
+    "value": "https://www.linkedin.com/in/naeun-lee-dev/",
+    "action": "link"
+  }
+]

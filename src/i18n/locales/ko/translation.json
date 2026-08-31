@@ -1,0 +1,43 @@
+{
+  "title": {
+    "about": "테스트",
+    "sign-in": "관리자 로그인",
+    "change-theme": "테마 변경",
+    "change-language": "언어 변경",
+    "view-projects": "프로젝트 살펴보기",
+    "get-in-touch": "연락하기"
+  },
+  "message": {
+    "alert": {
+      "invalid-password": "비밀번호가 일치하지 않습니다."
+    },
+    "success": {},
+    "warning": {},
+    "info": {
+      "link": "링크로 이동",
+      "copy": "클립보드에 복사",
+      "copied": "복사되었습니다!"
+    }
+  },
+  "element": {
+    "title": "프로젝트명",
+    "summary": "개요",
+    "period": "진행 기간",
+    "tech-stacks": "사용 기술",
+    "project-scale": "프로젝트 규모",
+    "category": {
+      "WORK": "실무",
+      "PERSONAL": "개인"
+    },
+    "project": "프로젝트",
+    "description": "상세",
+    "images": "이미지"
+  },
+  "button": {
+    "view-details": "더 알아보기",
+    "return-to-list": "목록으로",
+    "edit-project": "내용 수정",
+    "edit-images": "이미지 편집",
+    "delete-project": "삭제"
+  }
+}

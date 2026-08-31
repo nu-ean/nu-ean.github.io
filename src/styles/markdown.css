@@ -1,0 +1,80 @@
+.toastui-editor-contents {
+  background-color: transparent !important;
+  color: var(--text-color) !important;
+  font-size: 0.9rem !important;
+}
+
+.toastui-editor-contents p {
+  color: var(--text-color) !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.toastui-editor-contents h1 {
+  color: var(--text-color) !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.5rem !important;
+  font-size: 1.2rem !important;
+  border: none !important;
+}
+
+.toastui-editor-contents h2 {
+  color: var(--text-color) !important;
+  padding: 0 !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.5rem !important;
+  font-size: 1.1rem !important;
+  border: none !important;
+}
+
+.toastui-editor-contents h3 {
+  color: var(--text-color) !important;
+  padding: 0 !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.5rem !important;
+  font-size: 1rem !important;
+  border: none !important;
+}
+
+.toastui-editor-contents hr {
+  margin: 1rem 0 !important;
+}
+
+.toastui-editor-contents ul,
+.toastui-editor-contents ul ul {
+  margin-bottom: 0.5rem !important;
+  padding-left: 1rem !important;
+}
+
+.toastui-editor-contents ul li {
+  color: var(--text-color) !important;
+  padding-left: 0.5rem !important;
+}
+
+.toastui-editor-contents ul,
+.toastui-editor-contents menu,
+.toastui-editor-contents ol,
+.toastui-editor-contents dir {
+  color: var(--text-color) !important;
+}
+
+.toastui-editor-contents ul > li::before {
+  background-color: var(--list-item-color) !important;
+}
+
+.ProseMirror {
+  color: var(--text-color) !important;
+}
+
+.toastui-editor-main {
+  background-color: var(--input-bg-color) !important;
+}
+
+.toastui-editor-contents code {
+  padding: 0.1rem 0.3rem !important;
+  background-color: var(--code-bg-color) !important;
+  color: var(--code-color) !important;
+}
+
+.toastui-editor-contents strong {
+  color: var(--text-highlight) !important;
+}

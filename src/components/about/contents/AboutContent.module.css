@@ -1,0 +1,114 @@
+/* About */
+.about {
+  width: 100%;
+  color: var(--text-color);
+}
+
+.about p b {
+  color: var(--text-highlight);
+}
+
+.linkButtons {
+  display: flex;
+  gap: 1rem;
+  margin: 3rem 0 0 0;
+}
+
+.ctaButton,
+.ctaButtonAlt {
+  color: var(--text-color);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid var(--line-color);
+  padding-bottom: 0.2rem;
+  transition: all 0.3s ease;
+  opacity: 0.8;
+}
+
+.ctaButton:hover,
+.ctaButtonAlt:hover {
+  opacity: 1;
+  border-color: var(--text-highlight);
+  color: var(--text-highlight);
+}
+
+/* Journey */
+.journey {
+  width: 100%;
+  color: var(--text-color);
+}
+.journey h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  position: relative;
+  margin-bottom: 0;
+}
+
+.grayBox {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.listTitle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  margin-bottom: 0.5rem;
+}
+
+.listTitle span:first-child {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.listTitle span:last-child {
+  font-weight: 200;
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+}
+
+.grayBox p {
+  font-size: 0.9rem;
+  margin: 0;
+  margin-left: 0.5rem;
+  line-height: 1.5;
+}
+
+.grayBox ul {
+  margin: 0;
+  padding-inline-start: 1.5rem;
+}
+
+.grayBox ul li {
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.grayBox ul li:last-child {
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 1000px) {
+  .grayBox p,
+  .grayBox ul li,
+  .ctaButton,
+  .ctaButtonAlt {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .listTitle {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .listTitle span:last-child {
+    margin-left: 0;
+    margin-top: 0.25rem;
+  }
+}

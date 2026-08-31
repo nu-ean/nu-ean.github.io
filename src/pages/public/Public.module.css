@@ -1,0 +1,141 @@
+.pageTitle {
+  width: 100%;
+  font-size: 1.5rem;
+  font-weight: 200;
+  text-align: center;
+  margin-top: 8rem;
+}
+
+.navSection {
+  margin: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+.navButton {
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  width: fit-content;
+}
+
+.navButton::after {
+  transform-origin: right;
+}
+
+.editButtons a {
+  font-size: 0.9rem;
+  margin: 1rem 0 0 1rem;
+}
+
+.adminNav {
+  padding: 0 2rem;
+  width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.adminNav a {
+  font-size: 0.9rem;
+}
+
+.tableSection {
+  width: 100%;
+  margin-top: 1rem;
+  margin-bottom: 5rem;
+  padding-bottom: 5rem;
+}
+
+.tableSection table {
+  font-size: 0.9rem;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableSection table tbody tr td {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--line-color);
+}
+
+.tableSection table tbody tr td:first-child {
+  width: 20%;
+  min-width: 100px;
+  padding-left: 1rem;
+}
+
+.tableSection table tbody tr td:last-child {
+  width: 80%;
+  padding-right: 1rem;
+}
+
+.projectTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* 프로젝트 이미지 */
+.gallery {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+}
+
+.thumbnail {
+  width: 100%;
+  height: 13rem;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+.thumbnail:hover {
+  transform: scale(1.05);
+}
+
+/* 모달 */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent img {
+  max-width: 90vw;
+  max-height: 80vh;
+  border-radius: 10px;
+}
+
+@media (max-width: 1100px) {
+  .pageTitle {
+    margin-top: 5rem;
+  }
+}
+
+@media (max-width: 1000px) {
+  .adminNav {
+    width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .gallery {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 500px) {
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+}
