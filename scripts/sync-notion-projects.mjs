@@ -1,4 +1,4 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 
@@ -96,7 +96,7 @@ function getFiles(properties, name) {
     .filter((file) => file?.url);
 }
 
-function blockToMarkdown(block) {
+async function blockToMarkdown(block, context) {
   const type = block.type;
   const value = block[type];
 
@@ -123,7 +123,14 @@ function blockToMarkdown(block) {
       const url =
         value.type === "external" ? value.external?.url : value.file?.url;
       const caption = plainText(value.caption);
-      return url ? `![${caption}](${url})` : "";
+      if (!url) return "";
+
+      const imagePath = await downloadImage(
+        url,
+        `${context.projectId}-body-${++context.bodyImageIndex}`,
+      );
+
+      return `![${caption}](${imagePath})`;
     }
     default:
       return "";
@@ -149,10 +156,17 @@ async function getBlockChildren(blockId) {
   return results;
 }
 
-async function getDescription(pageId) {
+async function getDescription(pageId, projectId) {
   const blocks = await getBlockChildren(pageId);
+  const context = {
+    projectId,
+    bodyImageIndex: 0,
+  };
+  const markdownBlocks = await Promise.all(
+    blocks.map((block) => blockToMarkdown(block, context)),
+  );
 
-  return blocks.map(blockToMarkdown).filter(Boolean).join("\n\n");
+  return markdownBlocks.filter(Boolean).join("\n\n");
 }
 
 async function queryProjects() {
@@ -214,29 +228,36 @@ function extensionFromName(name) {
   return ext && /^[a-z0-9]+$/.test(ext) ? ext : undefined;
 }
 
-async function downloadProjectImages(projectId, files) {
+async function downloadImage(url, basename, fallbackName = "") {
   await mkdir(IMAGE_OUTPUT_DIR, { recursive: true });
 
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error(`Image download failed for ${basename}: ${response.status}`);
+  }
+
+  const contentType = response.headers.get("content-type");
+  const ext =
+    extensionFromName(fallbackName) || extensionFromContentType(contentType) || "png";
+  const filename = `${basename}.${ext}`;
+  const outputPath = path.join(IMAGE_OUTPUT_DIR, filename);
+  const buffer = Buffer.from(await response.arrayBuffer());
+
+  await writeFile(outputPath, buffer);
+
+  return `${IMAGE_PUBLIC_PATH}/${filename}`;
+}
+
+async function downloadProjectImages(projectId, files) {
   const imagePaths = [];
-
   for (const [index, file] of files.entries()) {
-    const response = await fetch(file.url);
-
-    if (!response.ok) {
-      throw new Error(
-        `Image download failed for ${projectId}: ${response.status} ${file.url}`,
-      );
-    }
-
-    const contentType = response.headers.get("content-type");
-    const ext =
-      extensionFromName(file.name) || extensionFromContentType(contentType) || "png";
-    const filename = `${projectId}-${index + 1}.${ext}`;
-    const outputPath = path.join(IMAGE_OUTPUT_DIR, filename);
-    const buffer = Buffer.from(await response.arrayBuffer());
-
-    await writeFile(outputPath, buffer);
-    imagePaths.push(`${IMAGE_PUBLIC_PATH}/${filename}`);
+    const imagePath = await downloadImage(
+      file.url,
+      `${projectId}-${index + 1}`,
+      file.name,
+    );
+    imagePaths.push(imagePath);
   }
 
   return imagePaths;
@@ -290,13 +311,14 @@ export function getProjectById(id: string): Project | undefined {
 }
 
 const pages = await queryProjects();
+await rm(IMAGE_OUTPUT_DIR, { recursive: true, force: true });
 
 const projects = await Promise.all(
   pages.map(async (page, index) => {
     const properties = page.properties;
     const id = getRichText(properties, "Slug") || page.id;
     const imageFiles = getFiles(properties, "Images");
-    const description = await getDescription(page.id);
+    const description = await getDescription(page.id, id);
     const images = await downloadProjectImages(id, imageFiles);
 
     return pruneEmptyValues(toProject(page, index + 1, description, images));
